@@ -133,7 +133,7 @@ def compute_ext_stat(trans2, account_id):
         res_rep[:] = 0
     else:
         res_rep.columns = [e+"_rep" for e in res_rep.columns]
-    results = pd.merge(res, res_rep, on="date",suffixes=["","_rep"])
+    results = pd.merge(res, res_rep, on="date",suffixes=["","_rep"], how="left")
     return results
 
 def repeated_transactions(data, ntimes=5, group_on_cols=["account_id", "typetrans","operationtrans","amount","amount2","k_symboltrans"]):

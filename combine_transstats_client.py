@@ -7,10 +7,10 @@ from dateutil.relativedelta import relativedelta
 """ the script read the data produced by compute_transac_stats.py and for each client with a loan store the
 stats for the n months before the loan started """
 
-with open("proc_data/data_transactions_monthlyagregated_all.pkl") as fopen:
-    _dagr = pickle.load(fopen)
-with open("proc_data/client_info.pkl") as fopen:
-    _clientinfo = pickle.load(fopen)
+with open("proc_data/data_transactions_monthlyagregated_all.pkl", "rb") as fopen:
+    _dagr = pickle.load(fopen, encoding = "latin1")
+with open("proc_data/client_info.pkl", "rb") as fopen:
+    _clientinfo = pickle.load(fopen, encoding="latin1")
 
 client_wl_info = _clientinfo[(_clientinfo["has_loan"] == 1)].copy()
 
@@ -96,7 +96,7 @@ client_wl_info["age"] = [e.days/365. for e in client_wl_info["age"]]
 client_wl_info["permonth"] =client_wl_info["amount"]/client_wl_info["duration"]
 
 #dump info to file
-print "dump {0} client info".format(len(client_wl_info))
-with open(outfile, "w") as fopen:
+print ("dump {0} client info".format(len(client_wl_info)))
+with open(outfile, "wb") as fopen:
     pickle.dump(client_wl_info,fopen)
 
